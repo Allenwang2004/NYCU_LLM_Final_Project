@@ -1,0 +1,11 @@
+torch
+transformers
+peft
+datasets==3.6.0
+trl
+bitsandbytes
+sentence-transformers
+faiss-cpu
+scikit-learn
+accelerate
+sacrebleu
