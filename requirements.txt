@@ -9,3 +9,8 @@ faiss-cpu
 scikit-learn
 accelerate
 sacrebleu
+pymupdf
+langchain
+tqdm
+langchain-text-splitters
+numpy
