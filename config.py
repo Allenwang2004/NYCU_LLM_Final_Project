@@ -23,12 +23,17 @@ class Config:
     
     # Fine-tuning config
     OUTPUT_DIR = "./llama-dialogue-finetuned"
+    LORA_RANK = 32
+    LORA_ALPHA = 64
     NUM_EPOCHS = 3
     BATCH_SIZE = 8
-    LEARNING_RATE = 2e-4
+    LEARNING_RATE = 1e-4
     MAX_SEQ_LENGTH = 512
+    GRAD_ACCUMULATION = 8
+    WEIGHT_DECAY = 0.1
+    MAX_GRAD_NORM = 1.0
     
-    DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+    DEVICE = "cuda:1" if torch.cuda.is_available() else "cpu"
 
     # Prompt Template
     # Topic -> Context (RAG) -> Generation
