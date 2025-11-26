@@ -1,14 +1,10 @@
 import fitz
 import re
 import os
+from config import config
 
-pdf_dirs = [
-    "./documents/Computer/",
-    "./documents/Physics/",
-    "./documents/Probability/"
-]
-
-output_dir = "./text"
+pdf_dirs = config.PDF_DIR
+output_dir = config.TXT_DIR
 os.makedirs(output_dir, exist_ok=True)
 
 def clean_text(text):
@@ -51,6 +47,7 @@ if __name__ == "__main__":
         for file in os.listdir(pdf_dir):
             if file.lower().endswith(".pdf"):
                 pdf_path = os.path.join(pdf_dir, file)
+                print("Extracting:", pdf_path)
                 text = extract_text(pdf_path, skip_first_page=skip_first)
                 filename = os.path.splitext(file)[0] + ".txt"
                 save_text(text, out_dir, filename)
