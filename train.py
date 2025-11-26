@@ -12,7 +12,7 @@ from transformers import (
 from peft import LoraConfig, get_peft_model, TaskType
 from trl import SFTTrainer, SFTConfig
 from config import Config
-from data_loader import generate_mock_data, format_instruction, load_real_daily_dialog
+from data_loader import format_instruction, load_daily_dialog
 
 def train():
     # 1. Tokenizer
@@ -47,7 +47,7 @@ def train():
 
     # 4. Datatsets
     print("Load Daily Dialog dataset for training...")
-    dataset = load_real_daily_dialog(split="train", limit=1000)
+    dataset = load_daily_dialog(split="train", limit=1000)
     dataset = dataset.map(format_instruction)
 
     training_args = SFTConfig(
