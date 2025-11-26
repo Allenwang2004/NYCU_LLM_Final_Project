@@ -4,6 +4,7 @@ class Config:
     MODEL_NAME = "meta-llama/Llama-3.2-1B-Instruct"
     
     EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+    RERANK_MODEL = "cross-encoder/ms-marco-MiniLM-L-12-v2"
     VECTOR_DB_PATH = "faiss_index.bin"
     TOP_K = 20 # 每次檢索幾份文件
     TOP_N = 3
