@@ -6,6 +6,17 @@ class Config:
     EMBEDDING_MODEL = "all-MiniLM-L6-v2"
     VECTOR_DB_PATH = "faiss_index.bin"
     TOP_K_RETRIEVAL = 2 # 每次檢索幾份文件
+
+    #RAG config
+    PDF_DIR = [
+    "./documents/Computer/",
+    "./documents/Physics/",
+    "./documents/Probability/"
+]
+    TXT_DIR = "./text"
+    CHUNK_DIR = "./chunks"
+    EMBED_DIR = "./embeddings"
+    FAISS_INDEX = "./faiss_index.index"
     
     # Fine-tuning config
     OUTPUT_DIR = "./llama-dialogue-finetuned"
