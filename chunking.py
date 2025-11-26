@@ -2,9 +2,11 @@ import json
 import re
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 import os
+from config import Config
 
-input_dir = "./text/"
-output_dir = "chunks" 
+config = Config()
+input_dir = config.TXT_DIR
+output_dir = config.CHUNK_DIR 
 os.makedirs(output_dir, exist_ok=True)
 
 text_splitter = RecursiveCharacterTextSplitter(
@@ -18,21 +20,20 @@ for root, dirs, files in os.walk(input_dir):
         if file.lower().endswith(".txt"):
             file_path = os.path.join(root, file)
 
-            # Read the text
             with open(file_path, "r", encoding="utf-8") as f:
                 text = f.read()
 
-            # Split into chunks
             chunks = text_splitter.split_text(text)
 
-            # Prepare data with metadata
             data = []
             chunk_id = 0
+            last_page = 1
+            
             for idx, chunk in enumerate(chunks):
                 page_match = re.search(r'\[Page (\d+)\]', chunk)
                 if page_match:
                     last_page = int(page_match.group(1))
-                page_num = int(page_match.group(1)) if page_match else last_page
+                page_num = last_page
                 chunk = re.sub(r'\[Page \d+\]', '', chunk).strip()
                 if not chunk:
                     continue
@@ -54,5 +55,5 @@ for root, dirs, files in os.walk(input_dir):
             out_path = os.path.join(out_dir_full, file.replace(".txt", ".json"))
             with open(out_path, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
-
-            print(f"Saved {len(chunks)} chunks -> {out_path}")
+                
+            print(f"Saved {len(data)} chunks -> {out_path}")
