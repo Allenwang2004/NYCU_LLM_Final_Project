@@ -2,10 +2,13 @@ import faiss
 import numpy as np
 import json
 import os
+from config import Config
 
-EMBEDDING_FILE = "./embeddings/embeddings.npy"
-METADATA_FILE = "./embeddings/metadata.json"
-FAISS_INDEX_FILE = "./faiss_index.index"
+config = Config()
+
+EMBEDDING_FILE = os.path.join(config.EMBED_DIR, "embeddings.npy")
+METADATA_FILE = os.path.join(config.EMBED_DIR, "metadata.json")
+FAISS_INDEX_FILE = config.FAISS_INDEX
 
 def load_embeddings():
     embeddings = np.load(EMBEDDING_FILE)
