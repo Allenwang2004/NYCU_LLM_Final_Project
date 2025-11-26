@@ -92,7 +92,6 @@ def train():
         eval_dataset=val_dataset,
         processing_class=tokenizer,
         args=training_args,
-        data_collator=DataCollatorForSeq2Seq(tokenizer, pad_to_multiple_of=8, return_tensors="pt", padding=True),
         callbacks=[EarlyStoppingCallback(early_stopping_patience=5)]
     )
 

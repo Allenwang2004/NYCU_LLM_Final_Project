@@ -3,6 +3,7 @@ import numpy as np
 import json
 from sentence_transformers import SentenceTransformer, CrossEncoder
 from config import Config
+import os
 
 # File paths
 config = Config()
