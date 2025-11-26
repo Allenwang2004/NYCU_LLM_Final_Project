@@ -5,7 +5,9 @@ class Config:
     
     EMBEDDING_MODEL = "all-MiniLM-L6-v2"
     VECTOR_DB_PATH = "faiss_index.bin"
-    TOP_K_RETRIEVAL = 2 # 每次檢索幾份文件
+    TOP_K = 20 # 每次檢索幾份文件
+    TOP_N = 3
+    ALPHA = 0.75
 
     #RAG config
     PDF_DIR = [
