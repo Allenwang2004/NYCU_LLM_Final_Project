@@ -2,12 +2,17 @@ import faiss
 import numpy as np
 import json
 from sentence_transformers import SentenceTransformer, CrossEncoder
+from config import Config
 
 # File paths
-FAISS_INDEX_FILE = "./faiss_index.index"
-METADATA_FILE = "./embeddings/metadata.json"
-EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-TOP_K = 20
+config = Config()
+FAISS_INDEX_FILE = config.FAISS_INDEX
+METADATA_FILE = os.path.join(config.EMBED_DIR, "metadata.json")
+EMBEDDING_MODEL = config.EMBEDDING_MODEL
+RERANK_MODEL = config.RERANK_MODEL
+TOP_K = config.TOP_K
+TOP_N = config.TOP_N
+ALPHA = config.ALPHA
 
 # Load FAISS index
 index = faiss.read_index(FAISS_INDEX_FILE)
@@ -18,10 +23,10 @@ with open(METADATA_FILE, "r", encoding="utf-8") as f:
 
 # Load embedding model
 encoder = SentenceTransformer(EMBEDDING_MODEL)
-reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-12-v2")
+reranker = CrossEncoder(RERANK_MODEL)
 
-def retrieve(query, top_k=TOP_K, top_n=5, alpha=0.7):
-    """Retrieve top-k chunks for a query."""
+def retrieve(query, top_k=TOP_K, top_n=TOP_N, alpha=ALPHA):
+    """Retrieve top-k chunks for a query. Import this for context."""
     query_vec = encoder.encode([query], convert_to_numpy=True)
     # Normalize for cosine similarity
     query_vec = query_vec / np.linalg.norm(query_vec, axis=1, keepdims=True)
@@ -47,4 +52,5 @@ if __name__ == "__main__":
         for i, chunk in enumerate(retrieved):
             print(f"\n--- Result {i+1} ---")
             print(f"Source: {chunk['source']}, Category: {chunk['category']}, Page: {chunk['page']}")
+
             print(chunk["text"][:500] + ("..." if len(chunk["text"]) > 500 else ""))
